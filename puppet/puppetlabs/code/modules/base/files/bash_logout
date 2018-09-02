@@ -1,0 +1,3 @@
+# ~/.bash_logout
+cowsay $(fortune)
+sleep 3
