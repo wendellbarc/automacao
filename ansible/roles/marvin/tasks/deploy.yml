@@ -1,0 +1,10 @@
+- name: Criando page no apache
+  template: 
+    src: ../templates/index.html
+    dest: /var/www/html/index.html
+
+- name: Baixar uma imagem
+  get_url: 
+    url: http://marketingdeconteudo.com/wp-content/uploads/2017/01/formatos-de-imagem-2.jpg
+    dest: /var/www/html/imagem.jpg
+

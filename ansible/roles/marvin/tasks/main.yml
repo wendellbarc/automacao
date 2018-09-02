@@ -1,0 +1,12 @@
+---
+# tasks file for marvin
+
+- name: Garantindo estrutura WEB
+  hosts: all
+  vars:
+  - texto: "Deploy OKdfsdhfsdjfh" 
+  tasks:
+  - include: prerequisitos.yml
+  - include: install_apache.yml
+  - include: install_httpd.yml
+  - include: deploy.yml

@@ -1,0 +1,8 @@
+- name: Instalar o puppet - REDHAT
+  command: rpm -Uvh /var/puppet.rpm
+  when: ansible_distribution == "CentOS"
+
+
+- name: Instalar o puppet-agent - REDHAT
+  yum: name=puppet-agent state=present
+  when: ansible_distribution == "CentOS"

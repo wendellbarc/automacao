@@ -1,0 +1,9 @@
+---
+# tasks file for puppet
+
+- name: Instalando o puppet
+  hosts: all 
+  tasks:
+   - include: prerequisitos.yml
+   - include: install_debian.yml
+   - include: install_redhat.yml

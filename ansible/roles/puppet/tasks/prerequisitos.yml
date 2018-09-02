@@ -1,0 +1,12 @@
+- name: Baixar o pacote Debian 
+  get_url:
+    url: https://apt.puppetlabs.com/puppet5-release-wheezy.deb
+    dest: /var/puppet.deb
+  when: ansible_os_family ==  "Debian"
+
+- name: Baixar o pacote Centos
+  get_url:
+    url: https://yum.puppet.com/puppet5/puppet5-release-el-7.noarch.rpm
+    dest: /var/puppet.rpm
+  when: ansible_os_family ==  "RedHat"
+

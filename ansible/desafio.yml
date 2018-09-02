@@ -1,0 +1,85 @@
+---
+
+- name: Desafio
+  hosts: all
+  tasks: 
+
+
+  - name: Parando o nginx
+    service:
+     name: nginx
+     state: stopped
+    ignore_errors: true
+ 
+
+  - name: Removendo nginx 
+    apt: name=nginx state=absent update_cache=yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Removendo nginx - Centos
+    yum: name=nginx state=absent
+    when: ansible_distribution == "CentOS"
+
+
+
+  - name: Instalando apache  - Ubuntu
+    apt: 
+      name: "{{ item }}"
+      state: present
+      update_cache: yes 
+    with_items: 
+    - "apache2"
+    - "libapache2-mod-php7.0"
+    - "php7.0"
+    notify: restart_apache  
+    when: ansible_distribution == "Ubuntu"
+
+
+
+  - name: Instalando apache - CENTOS
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - "httpd"
+    - "php"
+#    notify: restart_apache_centos
+    when: ansible_distribution == "CentOS"
+
+
+
+  - name: Habilitando modulo - Ubuntu
+    command: a2enmod php7.0
+    notify: restart_apache
+    when: ansible_distribution == "Ubuntu"
+
+
+
+  - name: Movendo Arquivo
+    copy:
+      src: /root/index.php
+      dest: /var/www/html/index.php
+    notify: restart_apache_centos
+    when: ansible_distribution == "CentOS"
+
+  - name: Movendo Arquivo
+    copy:
+      src: /root/index.php
+      dest: /var/www/html/index.php
+    notify: restart_apache
+    when: ansible_distribution == "Ubuntu"
+
+
+
+
+  handlers:
+  - name: restart_apache
+    service:
+     name: apache2
+     state: restarted
+
+  - name: restart_apache_centos
+    service:
+     name: httpd
+     state: restarted
+
