@@ -1,0 +1,18 @@
+---
+
+- name: Instalando RUNDECK 
+  hosts: automation
+  tasks: 
+    - name: Repositorio RUNDECK 
+      yum: 
+        name: http://repo.rundeck.org/latest.rpm
+
+    - name: Instalando o Rundeck 
+      yum: 
+        name: "{{ item }}"
+        state: present
+      with_items:
+      - java-1.8.0
+      - rundeck
+
+
